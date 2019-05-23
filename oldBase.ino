@@ -32,25 +32,6 @@ float vr = 0.0 ;
 std_msgs::UInt16 str_msg;
 ros::Publisher chatter("chatter", &str_msg);
 
-//void messageCb( const std_msgs::String& toggle_msg){
-//  String(toggle_msg.data).toCharArray(buf_s, String(toggle_msg.data).length());
-//  buf = strtok (buf_s,",");
-//  while (buf != NULL)
-//  {
-//    int result = 0 ;
-//    if(counter == 1 || counter == 3){
-//      result = atoi(buf);
-//      if(counter == 1){speed_l = result ;}else{speed_r = result ;}
-//      
-//    }else{
-//      if(counter == 2){dir_l = buf ;}else{dir_r = buf ;}
-//    }
-//    buf = strtok (NULL, " ,.-");
-//    counter ++ ;
-//  }
-//  motorsmove(speed_l,dir_l,speed_r,dir_r);
-//}
-
 void roverCallBack(const geometry_msgs::Twist& cmd_vel)
 {
   v = cmd_vel.linear.x   ;
@@ -101,9 +82,6 @@ void roverCallBack(const geometry_msgs::Twist& cmd_vel)
 //ros::Subscriber<std_msgs::String> sub("motors_dir", messageCb );
 ros::Subscriber <geometry_msgs::Twist> sub2("/cmd_vel", roverCallBack);
 
-
-
-
 char hello[13] = "hello world!";
 
 void setup()
@@ -146,15 +124,19 @@ void motordir(char *left_motor_dir ,char *right_motor_dir){
   if ( left_motor_dir[0] == 'f'){
       digitalWrite(MOTOR_LEFT_IN1,HIGH);
       digitalWrite(MOTOR_LEFT_IN2,LOW); 
+      Serial.println("Left");
   }else if ( left_motor_dir[0] == 'b'){
       digitalWrite(MOTOR_LEFT_IN1,LOW);
       digitalWrite(MOTOR_LEFT_IN2,HIGH);
+      Serial.println("Right");
   }else if ( left_motor_dir[0] == 's'){   
       digitalWrite(MOTOR_LEFT_IN1,HIGH);
       digitalWrite(MOTOR_LEFT_IN2,HIGH);
+      Serial.println("Forword");
   }else if ( left_motor_dir[0] == 'e'){
       digitalWrite(MOTOR_LEFT_IN1,LOW);
       digitalWrite(MOTOR_LEFT_IN2,LOW);
+      Serial.println("Stop");
   }
   // right motor dir
   if ( right_motor_dir[0] == 'f'){
