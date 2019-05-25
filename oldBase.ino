@@ -1,5 +1,5 @@
 
-#include <ros.h>
+#include <ros.h> 
 #include <std_msgs/String.h>
 #include <std_msgs/UInt16.h>
 #include <std_msgs/Empty.h>
@@ -41,8 +41,11 @@ void roverCallBack(const geometry_msgs::Twist& cmd_vel)
     // vr = v + ((w * 0.32) / 2) ;
     // vl = map(vl, -0.5, 0.5, -255, 255);
     // vr = map(vr, -0.5, 0.5, -255, 255);
-
-    if (v > 0 && w == 0) {
+    if (Serial.available() > 0)
+    {
+        char state = Serial.read();
+     
+    if (v > 0 && w == 0||state == 'W' || state == 'w') {
         analogWrite(MOTOR_F_LEFT_ENABLE, 255);
         digitalWrite(MOTOR_F_LEFT_IN1, HIGH);
         digitalWrite(MOTOR_F_LEFT_IN2, LOW);
@@ -56,9 +59,8 @@ void roverCallBack(const geometry_msgs::Twist& cmd_vel)
         digitalWrite(MOTOR_B_RIGHT_IN1, HIGH);
         digitalWrite(MOTOR_B_RIGHT_IN2, LOW);
         Serial.println("Moving forword");
-        str_msg.data = hello;
-        chatter.publish( &str_msg );
-    } else if ( v == 0 && w == 0) {
+
+    } else if ( v == 0 && w == 0||state == 'X' || state == 'x') {
         analogWrite(MOTOR_F_LEFT_ENABLE, 200);
         digitalWrite(MOTOR_F_LEFT_IN1, HIGH);
         digitalWrite(MOTOR_F_LEFT_IN2, HIGH);
@@ -72,7 +74,7 @@ void roverCallBack(const geometry_msgs::Twist& cmd_vel)
         digitalWrite(MOTOR_B_RIGHT_IN1, HIGH);
         digitalWrite(MOTOR_B_RIGHT_IN2, HIGH);
         Serial.println("Stop");
-    } else if (v < 0 && w == 0) {
+    } else if (v < 0 && w == 0||state == 'S' || state == 's') {
         analogWrite(MOTOR_F_LEFT_ENABLE, 200);
         digitalWrite(MOTOR_F_LEFT_IN1, LOW);
         digitalWrite(MOTOR_F_LEFT_IN2, HIGH);
@@ -86,15 +88,14 @@ void roverCallBack(const geometry_msgs::Twist& cmd_vel)
         analogWrite(MOTOR_B_RIGHT_ENABLE, 200);
         digitalWrite(MOTOR_B_RIGHT_IN1, LOW);
         digitalWrite(MOTOR_B_RIGHT_IN2, HIGH);
-        Serial.println("Moving");
-    } else if (w > 0 && v == 0) {
+        Serial.println("Moving backword");
+    } else if (w > 0 && v == 0||state == 'D' || state == 'd') {
         analogWrite(MOTOR_F_LEFT_ENABLE,255);
         digitalWrite(MOTOR_F_LEFT_IN1, HIGH);
         digitalWrite(MOTOR_F_LEFT_IN2, LOW);
         analogWrite(MOTOR_F_RIGHT_ENABLE,255);
         digitalWrite(MOTOR_F_RIGHT_IN1, HIGH);
         digitalWrite(MOTOR_F_RIGHT_IN2, HIGH);
-        Serial.println("w > 0 && v == 0");
 
         analogWrite(MOTOR_B_LEFT_ENABLE,255);
         digitalWrite(MOTOR_B_LEFT_IN1, HIGH);
@@ -102,15 +103,14 @@ void roverCallBack(const geometry_msgs::Twist& cmd_vel)
         analogWrite(MOTOR_B_RIGHT_ENABLE,255);
         digitalWrite(MOTOR_B_RIGHT_IN1, HIGH);
         digitalWrite(MOTOR_B_RIGHT_IN2, HIGH);
-        Serial.println("w > 0 && v == 0");
-    } else if (w < 0 && v == 0) {
+        Serial.println("Right");
+    } else if (w < 0 && v == 0||state == 'A' || state == 'a') {
         analogWrite(MOTOR_F_LEFT_ENABLE,255);
         digitalWrite(MOTOR_F_LEFT_IN1, HIGH);
         digitalWrite(MOTOR_F_LEFT_IN2, HIGH);
         analogWrite(MOTOR_F_RIGHT_ENABLE,255);
         digitalWrite(MOTOR_F_RIGHT_IN1, HIGH);
         digitalWrite(MOTOR_F_RIGHT_IN2, LOW);
-        Serial.println("w < 0 && v == 0");
 
         analogWrite(MOTOR_B_LEFT_ENABLE,255);
         digitalWrite(MOTOR_B_LEFT_IN1, HIGH);
@@ -118,15 +118,18 @@ void roverCallBack(const geometry_msgs::Twist& cmd_vel)
         analogWrite(MOTOR_B_RIGHT_ENABLE,255);
         digitalWrite(MOTOR_B_RIGHT_IN1, HIGH);
         digitalWrite(MOTOR_B_RIGHT_IN2, LOW);
-        Serial.println("w < 0 && v == 0");
+        Serial.println("Left");
     }
 
 }
-
+}
 ros::Subscriber <geometry_msgs::Twist> sub2("/cmd_vel", roverCallBack);
 
 void setup()
 {
+  
+    Serial.begin(57600);
+  
     pinMode(13, OUTPUT);
     nh.initNode();
     nh.advertise(chatter);
