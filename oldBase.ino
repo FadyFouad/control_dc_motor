@@ -146,10 +146,10 @@ ros::NodeHandle nh;
         pinMode(MOTOR_B_RIGHT_IN2,OUTPUT);
         pinMode(MOTOR_B_RIGHT_ENABLE,OUTPUT);
 
-        pinMode(20,INPUT);
-        attachInterrupt(digitalPinToInterrupt(20),leftticks,CHANGE);
-        pinMode(21,INPUT);
-        attachInterrupt(digitalPinToInterrupt(21),rightticks,CHANGE);
+//         pinMode(20,INPUT);
+//         attachInterrupt(digitalPinToInterrupt(20),leftticks,CHANGE);
+//         pinMode(21,INPUT);
+//         attachInterrupt(digitalPinToInterrupt(21),rightticks,CHANGE);
 
         }
 
