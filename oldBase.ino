@@ -26,8 +26,6 @@ ros::NodeHandle nh;
 
         float v=0.0;
         float w=0.0;
-        float vl=0.0;
-        float vr=0.0;
 
         std_msgs::UInt16 str_msg;
         ros::Publisher chatter("chatter",&str_msg);
@@ -46,21 +44,23 @@ ros::NodeHandle nh;
         analogWrite(MOTOR_F_LEFT_ENABLE,255);
         digitalWrite(MOTOR_F_LEFT_IN1,HIGH);
         digitalWrite(MOTOR_F_LEFT_IN2,LOW);
-        analogWrite(MOTOR_F_RIGHT_ENABLE,255);
+                
+        analogWrite(MOTOR_F_RIGHT_ENABLE,100);
         digitalWrite(MOTOR_F_RIGHT_IN1,HIGH);
         digitalWrite(MOTOR_F_RIGHT_IN2,LOW);
-        analogWrite(MOTOR_B_LEFT_ENABLE,255);
+        analogWrite(MOTOR_B_LEFT_ENABLE,100);
         digitalWrite(MOTOR_B_LEFT_IN1,HIGH);
         digitalWrite(MOTOR_B_LEFT_IN2,LOW);
-        analogWrite(MOTOR_B_RIGHT_ENABLE,255);
+        analogWrite(MOTOR_B_RIGHT_ENABLE,100);
         digitalWrite(MOTOR_B_RIGHT_IN1,HIGH);
         digitalWrite(MOTOR_B_RIGHT_IN2,LOW);
         Serial.println("Moving forword");
 
         }else if(v==0&&w==0||state=='X'||state=='x'){
-        analogWrite(MOTOR_F_LEFT_ENABLE,200);
+        analogWrite(MOTOR_F_LEFT_ENABLE,255);
         digitalWrite(MOTOR_F_LEFT_IN1,HIGH);
         digitalWrite(MOTOR_F_LEFT_IN2,HIGH);
+                
         analogWrite(MOTOR_F_RIGHT_ENABLE,200);
         digitalWrite(MOTOR_F_RIGHT_IN1,HIGH);
         digitalWrite(MOTOR_F_RIGHT_IN2,HIGH);
@@ -72,50 +72,55 @@ ros::NodeHandle nh;
         digitalWrite(MOTOR_B_RIGHT_IN2,HIGH);
         Serial.println("Stop");
         }else if(v< 0&&w==0||state=='S'||state=='s'){
-        analogWrite(MOTOR_F_LEFT_ENABLE,200);
+        analogWrite(MOTOR_F_LEFT_ENABLE,255);
         digitalWrite(MOTOR_F_LEFT_IN1,LOW);
         digitalWrite(MOTOR_F_LEFT_IN2,HIGH);
-        analogWrite(MOTOR_F_RIGHT_ENABLE,200);
+                
+        analogWrite(MOTOR_F_RIGHT_ENABLE,100);
         digitalWrite(MOTOR_F_RIGHT_IN1,LOW);
         digitalWrite(MOTOR_F_RIGHT_IN2,HIGH);
 
-        analogWrite(MOTOR_B_LEFT_ENABLE,200);
+        analogWrite(MOTOR_B_LEFT_ENABLE,100);
         digitalWrite(MOTOR_B_LEFT_IN1,LOW);
         digitalWrite(MOTOR_B_LEFT_IN2,HIGH);
-        analogWrite(MOTOR_B_RIGHT_ENABLE,200);
+        analogWrite(MOTOR_B_RIGHT_ENABLE,100);
         digitalWrite(MOTOR_B_RIGHT_IN1,LOW);
         digitalWrite(MOTOR_B_RIGHT_IN2,HIGH);
         Serial.println("Moving backword");
         }else if(w>0&&v==0||state=='D'||state=='d'){
-        analogWrite(MOTOR_F_LEFT_ENABLE,255);
+        analogWrite(MOTOR_F_LEFT_ENABLE,155);
         digitalWrite(MOTOR_F_LEFT_IN1,HIGH);
         digitalWrite(MOTOR_F_LEFT_IN2,LOW);
-        analogWrite(MOTOR_F_RIGHT_ENABLE,255);
-        digitalWrite(MOTOR_F_RIGHT_IN1,HIGH);
-        digitalWrite(MOTOR_F_RIGHT_IN2,HIGH);
-
-        analogWrite(MOTOR_B_LEFT_ENABLE,255);
+        analogWrite(MOTOR_B_LEFT_ENABLE,155);
         digitalWrite(MOTOR_B_LEFT_IN1,HIGH);
         digitalWrite(MOTOR_B_LEFT_IN2,LOW);
+                
+        analogWrite(MOTOR_F_RIGHT_ENABLE,255);
+        digitalWrite(MOTOR_F_RIGHT_IN1,LOW);
+        digitalWrite(MOTOR_F_RIGHT_IN2,LOW);
         analogWrite(MOTOR_B_RIGHT_ENABLE,255);
-        digitalWrite(MOTOR_B_RIGHT_IN1,HIGH);
-        digitalWrite(MOTOR_B_RIGHT_IN2,HIGH);
+        digitalWrite(MOTOR_B_RIGHT_IN1,LOW);
+        digitalWrite(MOTOR_B_RIGHT_IN2,LOW);
+               
         Serial.println("Right");
         }else if(w< 0&&v==0||state=='A'||state=='a'){
-        analogWrite(MOTOR_F_LEFT_ENABLE,255);
-        digitalWrite(MOTOR_F_LEFT_IN1,HIGH);
-        digitalWrite(MOTOR_F_LEFT_IN2,HIGH);
-        analogWrite(MOTOR_F_RIGHT_ENABLE,255);
+                
+        analogWrite(MOTOR_F_RIGHT_ENABLE,155);
         digitalWrite(MOTOR_F_RIGHT_IN1,HIGH);
         digitalWrite(MOTOR_F_RIGHT_IN2,LOW);
-
-        analogWrite(MOTOR_B_LEFT_ENABLE,255);
-        digitalWrite(MOTOR_B_LEFT_IN1,HIGH);
-        digitalWrite(MOTOR_B_LEFT_IN2,HIGH);
-        analogWrite(MOTOR_B_RIGHT_ENABLE,255);
+        analogWrite(MOTOR_B_RIGHT_ENABLE,155);
         digitalWrite(MOTOR_B_RIGHT_IN1,HIGH);
         digitalWrite(MOTOR_B_RIGHT_IN2,LOW);
+        
+        analogWrite(MOTOR_F_LEFT_ENABLE,255);
+        digitalWrite(MOTOR_F_LEFT_IN1,LOW);
+        digitalWrite(MOTOR_F_LEFT_IN2,LOW);  
+        analogWrite(MOTOR_B_LEFT_ENABLE,255);
+        digitalWrite(MOTOR_B_LEFT_IN1,LOW);
+        digitalWrite(MOTOR_B_LEFT_IN2,LOW);
+        
         Serial.println("Left");
+        
         }
         }
         }
@@ -146,10 +151,6 @@ ros::NodeHandle nh;
         pinMode(MOTOR_B_RIGHT_IN2,OUTPUT);
         pinMode(MOTOR_B_RIGHT_ENABLE,OUTPUT);
 
-//         pinMode(20,INPUT);
-//         attachInterrupt(digitalPinToInterrupt(20),leftticks,CHANGE);
-//         pinMode(21,INPUT);
-//         attachInterrupt(digitalPinToInterrupt(21),rightticks,CHANGE);
 
         }
 
