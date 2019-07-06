@@ -3,6 +3,7 @@
 // TX (Pin 1) ———> RX
 // 5V ———> VCC
 // GND ———> GND
+// TODO Change Serial.begin(######);
 
 // motor one
 int MOTOR_F_RIGHT_ENABLE = 4;
